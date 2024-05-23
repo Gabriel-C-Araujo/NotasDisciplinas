@@ -95,11 +95,36 @@ class AtualizaAluno:
         sm2 = self.sm2_entry.get()
         av = self.av_entry.get()
         avs = self.avs_entry.get()
+        aprovacao
+        nf
+
+        if av > avs:
+            if av == 10:
+                nf = av
+                aprovado = True
+            if av > 6 :
+               av = (av + sm1 + sm2)
+               if av > 10:
+                   av = 10
+               aprovacao = True
+               nf = av
+        else :
+            if avs == 10:
+                nf = avs
+                aprovado = True
+            if avs > 6 :
+               avs = (avs + sm1 + sm2)
+               aprovacao = True
+               if avs > 10:
+                   avs = 10
+               aprovacao = True
+               nf = avs
+
 
         if self.bd.conectar():
             aluno_id = self.bd.buscar_aluno_por_nome(nome_aluno)
             if aluno_id:
-                self.bd.atualizar_materia(aluno_id, sm1, sm2, av, avs)
+                self.bd.atualizar_materia(aluno_id, sm1, sm2, av, avs, nf , aprovacao)
                 messagebox.showinfo("Sucesso", "Aluno atualizado com sucesso.")
             else:
                 messagebox.showerror("Erro", "Aluno não encontrado.")

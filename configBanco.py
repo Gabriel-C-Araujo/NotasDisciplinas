@@ -76,13 +76,13 @@ class BancoDados:
             print(f"Erro ao buscar disciplina: {e}")
             return None
 
-    def atualizar_materia(self, aluno_id, sm1, sm2, av, avs):
+    def atualizar_materia(self, aluno_id, sm1, sm2, av, avs, nf, aprovacao):
         try:
             self.cursor.execute("""
                 UPDATE materias
-                SET sm1 = %s, sm2 = %s, av = %s, avs = %s
+                SET sm1 = %s, sm2 = %s, av = %s, avs = %s, nf = %s, aprovacao = %s
                 WHERE aluno_id = %s
-            """, (sm1, sm2, av, avs, aluno_id))
+            """, (sm1, sm2, av, avs, aluno_id, nf, aprovacao))
             self.conexao.commit()
         except psycopg2.Error as e:
             print(f"Erro ao atualizar dados da matéria: {e}")
