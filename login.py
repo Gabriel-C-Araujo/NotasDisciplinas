@@ -1,6 +1,3 @@
-import sys
-sys.path.append('C:/Users/Augusto Camolesi/Desktop/Trabalho/omar')
-
 import tkinter as tk
 from tkinter import ttk, messagebox
 from configBanco import BancoDados
