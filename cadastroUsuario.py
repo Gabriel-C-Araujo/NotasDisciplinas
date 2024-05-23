@@ -31,7 +31,7 @@ class TelaCadastroUsuario:
         # Estilo para os campos de entrada e botão
         estilo = ttk.Style()
         estilo.configure('Estilo.TEntry', foreground="black", font=('Arial', 10))
-        estilo.configure('Estilo.TButton', foreground="white", font=('Arial', 10), background='#4CAF50')
+        estilo.configure('Estilo.TButton', foreground="white", font=('Arial', 10), background='#0074D9')
 
         # Labels e Entry para nome de usuário, senha e confirmação de senha
         username_label = ttk.Label(frame, text="Nome de Usuário:", font=('Arial', 12))
