@@ -1,0 +1,27 @@
+CREATE TABLE login (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    password VARCHAR(100) NOT null);
+
+-- Criação da tabela alunos
+CREATE TABLE alunos (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    matricula VARCHAR(20) UNIQUE NOT NULL
+);
+
+-- Criação da tabela materias
+CREATE TABLE materias (
+    id SERIAL PRIMARY KEY,
+    aluno_id INTEGER REFERENCES alunos(id),
+    nome_da_materia VARCHAR(100) NOT NULL,
+    ano INTEGER NOT NULL,
+    semestre INTEGER NOT NULL,
+    aprovacao BOOLEAN NOT NULL DEFAULT FALSE,
+    sm1 FLOAT,
+    sm2 FLOAT,
+    av FLOAT,
+    avs FLOAT,
+    nf FLOAT,
+    CONSTRAINT fk_aluno FOREIGN KEY (aluno_id) REFERENCES alunos(id) ON DELETE CASCADE
+);
