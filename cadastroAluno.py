@@ -77,7 +77,8 @@ class TelaCadastroAluno:
         frame.grid_rowconfigure(4, weight=1)
         frame.grid_rowconfigure(5, weight=1)
 
-        self.bd = BancoDados("SistemaNotas", "postgres", "123456")
+        # self.bd = BancoDados("SistemaNotas", "postgres", "123456")
+        self.bd = BancoDados()
         self.root.mainloop()
 
     def cadastrar_aluno(self):

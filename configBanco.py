@@ -1,17 +1,18 @@
 import psycopg2
 
 class BancoDados:
-    def __init__(self, banco, usuario, senha):
-        self.banco = banco
-        self.usuario = usuario
-        self.senha = senha
-        self.conexao = None
+    def __init__(self):#, banco, usuario, senha):
+        self.conexao = psycopg2.connect(database="SistemaNotas", user="postgres", password="123456", host="localhost", port=5432)
+        #self.banco = banco
+        #self.usuario = usuario
+        #self.senha = senha
+        #self.conexao = None
         self.cursor = None
 
     def conectar(self):
         try:
-            self.conexao = psycopg2.connect(
-                dbname=self.banco, user=self.usuario, password=self.senha)
+            #self.conexao = psycopg2.connect(
+            #    dbname=self.banco, user=self.usuario, password=self.senha)
             self.cursor = self.conexao.cursor()
             return True
         except psycopg2.Error as e:
@@ -59,6 +60,21 @@ class BancoDados:
         except psycopg2.Error as e:
             print(f"Erro ao buscar aluno por matrícula: {e}")
             return None
+        
+    def buscar_alunos_por_disciplina(self, nome_disciplina):
+        try:
+            self.cursor.execute(
+                "SELECT id FROM materias WHERE nome_da_materia = %s", (nome_disciplina,))
+            disciplinas = self.cursor.fetchall()
+            if nome_disciplina != '' or nome_disciplina is not None:
+                for disciplina in disciplinas:
+                    return disciplina[0]
+            else:
+                print(f"Disciplina '{nome_disciplina}' não encontrado.")
+                return None
+        except psycopg2.Error as e:
+            print(f"Erro ao buscar disciplina: {e}")
+            return None
 
     def atualizar_materia(self, aluno_id, sm1, sm2, av, avs):
         try:
@@ -80,3 +96,45 @@ class BancoDados:
             self.conexao.commit()
         except psycopg2.Error as e:
             print(f"Erro ao deletar aluno e suas matérias: {e}")
+
+    def criar_banco_dados(self):
+        try:
+            self.cursor.execute('''
+            CREATE DATABASE IF NOT EXISTS SistemaNotas;
+
+            --CREATE SCHEMA IF NOT EXISTS SistemaNotas;
+                                                    
+            CREATE TABLE IF NOT EXISTS login (
+            id SERIAL PRIMARY KEY,
+            username VARCHAR(50) NOT NULL,
+            password VARCHAR(100) NOT null);
+
+            -- Criação da tabela alunos
+            CREATE TABLE IF NOT EXISTS alunos (
+            id SERIAL PRIMARY KEY,
+            nome VARCHAR(100) NOT NULL,
+            matricula VARCHAR(20) UNIQUE NOT NULL
+            );
+
+            -- Criação da tabela materias
+            CREATE TABLE IF NOT EXISTS materias (
+            id SERIAL PRIMARY KEY,
+            aluno_id INTEGER REFERENCES alunos(id),
+            nome_da_materia VARCHAR(100) NOT NULL,
+            ano INTEGER NOT NULL,
+            semestre INTEGER NOT NULL,
+            aprovacao BOOLEAN NOT NULL DEFAULT FALSE,
+            sm1 FLOAT,
+            sm2 FLOAT,
+            av FLOAT,
+            avs FLOAT,
+            nf FLOAT,
+            CONSTRAINT fk_aluno FOREIGN KEY (aluno_id) REFERENCES alunos(id) ON DELETE CASCADE
+            );
+
+            INSERT INTO public.login
+            (id, username, "password")
+            VALUES(nextval('login_id_seq'::regclass), 'admin', '123456') ON CONFLICT DO NOTHING;''')
+            self.conexao.commit()
+        except psycopg2.Error as e:
+            print(f"Erro ao criar as tabelas e inserir os dados do usuário inicial: {e}")

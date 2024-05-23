@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, messagebox
 from atualizaAluno import AtualizaAluno
 from configBanco import BancoDados
 
@@ -75,7 +75,8 @@ class ListaDeAlunos:
         self.atualizar_button.pack(pady=10)
 
         # Preenche a árvore de dados com os alunos e suas matérias
-        self.bd = BancoDados("SistemaNotas", "postgres", "123456")
+        # self.bd = BancoDados("SistemaNotas", "postgres", "123456")
+        self.bd = BancoDados()
         self.carregar_alunos_materias()
         
         # Centraliza o frame na janela

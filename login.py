@@ -8,6 +8,11 @@ class TelaLogin:
     def __init__(self):
         self.root = tk.Tk()
         self.root.title("Tela de Login")
+
+        self.bd = BancoDados()
+        self.bd.conectar()
+        self.bd.criar_banco_dados()
+        self.bd.desconectar()
         
         # Define o tamanho da janela e a centraliza na tela
         largura = 500
@@ -46,7 +51,8 @@ class TelaLogin:
         close_button = ttk.Button(self.root, text="Fechar", command=self.fechar_janela, style='Estilo.TButton')
         close_button.pack(pady=5)
 
-        self.bd = BancoDados("SistemaNotas", "postgres", "123456")
+        #self.bd = BancoDados("SistemaNotas", "postgres", "123456")
+        self.bd = BancoDados()
         self.root.mainloop()
 
     def carregar_imagem(self, caminho, largura, altura):
@@ -63,7 +69,8 @@ class TelaLogin:
         self.root.destroy()
 
 def autenticar_usuario(username, password):
-    bd = BancoDados("SistemaNotas", "postgres", "123456")
+    #bd = BancoDados("SistemaNotas", "postgres", "123456")
+    bd = BancoDados()
     if not bd.conectar():
         messagebox.showerror("Erro", "Não foi possível conectar ao banco de dados.")
         return
@@ -72,7 +79,7 @@ def autenticar_usuario(username, password):
         # Consulta SQL para verificar se o usuário e senha estão corretos
         result = bd.executar_consulta("SELECT * FROM login WHERE username = %s AND password = %s", (username, password))
         if result:
-            messagebox.showinfo("Login", "Login bem-sucedido!")
+            # messagebox.showinfo("Login", "Login bem-sucedido!")
             # Chama a tela home
             TelaHome()
         else:
