@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
+from tkinter.messagebox import showinfo
 from configBanco import BancoDados 
 
 class AtualizaAluno:
@@ -102,24 +103,33 @@ class AtualizaAluno:
             if av == 10:
                 nf = av
                 aprovado = True
+                self.popup_aprovado()
             if av > 6 :
                av = (av + sm1 + sm2)
                if av > 10:
                    av = 10
+                   self.popup_aprovado()
                aprovacao = True
                nf = av
+               self.popup_aprovado()
+            else:
+                self.popup_reprovado()
         else :
             if avs == 10:
                 nf = avs
                 aprovado = True
+                self.popup_aprovado()
             if avs > 6 :
                avs = (avs + sm1 + sm2)
                aprovacao = True
+               self.popup_aprovado()
                if avs > 10:
                    avs = 10
+                   self.popup_aprovado()
                aprovacao = True
                nf = avs
-
+            else:
+                self.popup_reprovado()
 
         if self.bd.conectar():
             aluno_id = self.bd.buscar_aluno_por_nome(nome_aluno)
@@ -142,6 +152,12 @@ class AtualizaAluno:
             else:
                 messagebox.showerror("Erro", "Aluno não encontrado.")
             self.bd.desconectar()
+    
+    def popup_aprovado():
+        showinfo("Window", "Aprovado!")
+
+    def popup_reprovado():
+        showinfo("Window", "Reprovado!")
 
 if __name__ == "__main__":
     AtualizaAluno()

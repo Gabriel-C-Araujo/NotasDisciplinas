@@ -63,12 +63,12 @@ class TelaLogin:
     def fazer_login(self):
         username = self.username_entry.get()
         password = self.password_entry.get()
-        autenticar_usuario(username, password)
+        autenticar_usuario(self, username, password)
 
     def fechar_janela(self):
         self.root.destroy()
 
-def autenticar_usuario(username, password):
+def autenticar_usuario(self, username, password):
     #bd = BancoDados("SistemaNotas", "postgres", "123456")
     bd = BancoDados()
     if not bd.conectar():
@@ -80,7 +80,8 @@ def autenticar_usuario(username, password):
         result = bd.executar_consulta("SELECT * FROM login WHERE username = %s AND password = %s", (username, password))
         if result:
             # messagebox.showinfo("Login", "Login bem-sucedido!")
-            # Chama a tela home
+            # Chama a tela home        
+            TelaLogin.fechar_janela(self)
             TelaHome()
         else:
             messagebox.showerror("Erro de Login", "Usuário ou senha incorretos!")

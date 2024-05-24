@@ -1,10 +1,9 @@
-# home.py
-
 import tkinter as tk
 from tkinter import ttk
 from cadastroAluno import TelaCadastroAluno
 from cadastroUsuario import TelaCadastroUsuario
-from listaAlunos import ListaDeAlunos
+import listaAlunos as ListaAluno
+from sobre import TelaSobre
 
 class TelaHome:
     def __init__(self):
@@ -35,22 +34,29 @@ class TelaHome:
         cadastrar_usuario_button = ttk.Button(self.root, text="Cadastrar Usuário", command=self.abrir_tela_cadastro_usuario, style='Estilo.TButton')
         cadastrar_usuario_button.pack(pady=10)
 
+        sobre_button = ttk.Button(self.root, text="Sobre", command=self.abrir_tela_sobre, style='Estilo.TButton')
+        sobre_button.pack(pady=10)
+
         logout_button = ttk.Button(self.root, text="Fazer Logout", command=self.fazer_logout, style='Estilo.TButton')
         logout_button.pack(pady=10)
 
         self.root.mainloop()
 
     def abrir_tela_cadastro_aluno(self):
-        TelaCadastroAluno()
+        TelaCadastroAluno()    
 
     def abrir_tela_lista_alunos(self):
-        ListaDeAlunos()
+        self.root.destroy()
+        ListaAluno.ListaDeAlunos()
 
     def abrir_tela_cadastro_usuario(self):
         TelaCadastroUsuario()
 
+    def abrir_tela_sobre(self):
+        TelaSobre()
+
     def fazer_logout(self):
-        self.root.destroy()
+        self.root.destroy()    
 
 if __name__ == "__main__":
     TelaHome()

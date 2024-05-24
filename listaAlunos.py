@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 from atualizaAluno import AtualizaAluno
 from configBanco import BancoDados
+import home as PagHome
 
 class ListaDeAlunos:
     def __init__(self):
@@ -74,6 +75,10 @@ class ListaDeAlunos:
         self.atualizar_button = ttk.Button(frame, text="Atualizar Aluno", command=self.abrir_atualiza_aluno, style='Estilo.TButton')
         self.atualizar_button.pack(pady=10)
 
+        # Botão de voltar
+        homepage_button = ttk.Button(self.root, text="Voltar", command=self.root.destroy , style='Estilo.TButton')
+        homepage_button.pack(pady=10)   
+
         # Preenche a árvore de dados com os alunos e suas matérias
         # self.bd = BancoDados("SistemaNotas", "postgres", "123456")
         self.bd = BancoDados()
@@ -84,6 +89,10 @@ class ListaDeAlunos:
         frame.grid_rowconfigure(0, weight=1)
 
         self.root.mainloop()
+
+        checar_home2 = PagHome.TelaHome.__getstate__(self)
+        if checar_home2:
+            PagHome.TelaHome()        
 
     def carregar_alunos_materias(self):
         if not self.bd.conectar():
