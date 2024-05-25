@@ -104,13 +104,12 @@ class AtualizaAluno:
                 nf = av
                 aprovacao = True
                 self.popup_aprovado()
-            if av > 6 :
-               av = (av + sm1 + sm2)
-               if av > '10':
-                   av = '10'
+            if float(av) > 6: 
+               nf = (av + sm1 + sm2)
+               if nf > '10':
+                   nf = '10'
                    self.popup_aprovado()
                aprovacao = True
-               nf = av
                self.popup_aprovado()
             else:
                 self.popup_reprovado()
@@ -119,15 +118,14 @@ class AtualizaAluno:
                 nf = avs
                 aprovacao = True
                 self.popup_aprovado()
-            if avs > '6' :
-               avs = (avs + sm1 + sm2)
+            if float(av) > 6:
+               nf = (avs + sm1 + sm2)
                aprovacao = True
                self.popup_aprovado()
-               if avs > '10':
-                   avs = '10'
+               if nf > '10':
+                   nf = '10'
                    self.popup_aprovado()
                aprovacao = True
-               nf = avs
             else:
                 self.popup_reprovado()
 

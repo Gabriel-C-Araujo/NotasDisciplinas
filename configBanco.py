@@ -83,7 +83,7 @@ class BancoDados:
                 UPDATE materias
                 SET sm1 = %s, sm2 = %s, av = %s, avs = %s, nf = %s, aprovacao = %s
                 WHERE aluno_id = %s
-            """, (sm1, sm2, av, avs, aluno_id, nf, aprovacao))
+            """, (sm1, sm2, av, avs, nf, aprovacao, aluno_id))
             self.conexao.commit()
         except psycopg2.Error as e:
             print(f"Erro ao atualizar dados da matéria: {e}")
