@@ -96,18 +96,18 @@ class AtualizaAluno:
         sm2 = self.sm2_entry.get()
         av = self.av_entry.get()
         avs = self.avs_entry.get()
-        aprovacao
-        nf
+        aprovacao = False
+        nf = '0'
 
         if av > avs:
-            if av == 10:
+            if av == '10':
                 nf = av
-                aprovado = True
+                aprovacao = True
                 self.popup_aprovado()
             if av > 6 :
                av = (av + sm1 + sm2)
-               if av > 10:
-                   av = 10
+               if av > '10':
+                   av = '10'
                    self.popup_aprovado()
                aprovacao = True
                nf = av
@@ -115,16 +115,16 @@ class AtualizaAluno:
             else:
                 self.popup_reprovado()
         else :
-            if avs == 10:
+            if avs == '10':
                 nf = avs
-                aprovado = True
+                aprovacao = True
                 self.popup_aprovado()
-            if avs > 6 :
+            if avs > '6' :
                avs = (avs + sm1 + sm2)
                aprovacao = True
                self.popup_aprovado()
-               if avs > 10:
-                   avs = 10
+               if avs > '10':
+                   avs = '10'
                    self.popup_aprovado()
                aprovacao = True
                nf = avs
@@ -136,8 +136,10 @@ class AtualizaAluno:
             if aluno_id:
                 self.bd.atualizar_materia(aluno_id, sm1, sm2, av, avs, nf , aprovacao)
                 messagebox.showinfo("Sucesso", "Aluno atualizado com sucesso.")
+                self.root.destroy()
             else:
                 messagebox.showerror("Erro", "Aluno não encontrado.")
+                self.root.focus_force()
             self.bd.desconectar()
 
     def deletar_aluno(self):
@@ -149,13 +151,17 @@ class AtualizaAluno:
             if aluno_id:
                 self.bd.deletar_aluno_materia(aluno_id)
                 messagebox.showinfo("Sucesso", "Aluno deletado com sucesso.")
+                self.root.destroy()
             else:
                 messagebox.showerror("Erro", "Aluno não encontrado.")
+                self.root.focus_force()
             self.bd.desconectar()
     
+    @staticmethod
     def popup_aprovado():
         showinfo("Window", "Aprovado!")
 
+    @staticmethod
     def popup_reprovado():
         showinfo("Window", "Reprovado!")
 

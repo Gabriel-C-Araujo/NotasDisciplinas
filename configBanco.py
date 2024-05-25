@@ -75,7 +75,8 @@ class BancoDados:
         except psycopg2.Error as e:
             print(f"Erro ao buscar disciplina: {e}")
             return None
-
+    
+    #@staticmethod
     def atualizar_materia(self, aluno_id, sm1, sm2, av, avs, nf, aprovacao):
         try:
             self.cursor.execute("""
