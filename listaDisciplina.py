@@ -1,10 +1,10 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
-from atualizaAluno import AtualizaAluno
 from configBanco import BancoDados
+import filtroDisciplina as FiltraDisciplina
 import home as PagHome
 
-class ListaDeAlunos:
+class ListaDisciplina:
     def __init__(self):
         self.root = tk.Tk()
         self.root.title("Lista de Alunos")
@@ -71,10 +71,6 @@ class ListaDeAlunos:
         scrollbar.pack(side="right", fill="y")
         self.tree.pack(fill=tk.BOTH, expand=True)
 
-        # Adiciona o botão "Atualizar Aluno"
-        self.atualizar_button = ttk.Button(frame, text="Atualizar Aluno", command=self.abrir_atualiza_aluno, style='Estilo.TButton')
-        self.atualizar_button.pack(pady=10)
-
         # Botão de voltar
         homepage_button = ttk.Button(self.root, text="Voltar", command=self.root.destroy , style='Estilo.TButton')
         homepage_button.pack(pady=10)   
@@ -93,29 +89,26 @@ class ListaDeAlunos:
         if checar_home2:
             PagHome.TelaHome()        
 
-    def carregar_alunos_materias(self):
+    def carregar_alunos_materias(self, disciplina):
         if not self.bd.conectar():
             messagebox.showerror("Erro", "Não foi possível conectar ao banco de dados.")
             return
-
         try:
             # Consulta para obter os alunos e suas matérias
-            query = """
+            self.bd.cursor.execute('''
             SELECT alunos.nome, alunos.matricula, materias.nome_da_materia, materias.ano, materias.semestre, materias.aprovacao,
             materias.sm1, materias.sm2, materias.av, materias.avs, materias.nf
             FROM alunos
             JOIN materias ON alunos.id = materias.aluno_id
-            """
-            alunos_materias = self.bd.executar_consulta(query)
-
+            WHERE materias.nome_da_materia = %s)
+            ''',(disciplina))
+            alunos_disciplina = self.bd.cursor.fetchone()
             # Preenche a árvore de dados com os alunos e suas matérias
-            for aluno_materia in alunos_materias:
+            # não ta funcionando
+            for aluno_materia in alunos_disciplina:
                 self.tree.insert('', tk.END, values=aluno_materia)
         finally:
             self.bd.desconectar()
 
-    def abrir_atualiza_aluno(self):
-        AtualizaAluno()
-
 if __name__ == "__main__":
-    ListaDeAlunos()
+    ListaDisciplina()

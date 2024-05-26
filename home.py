@@ -4,6 +4,7 @@ from cadastroAluno import TelaCadastroAluno
 from cadastroUsuario import TelaCadastroUsuario
 import listaAlunos as ListaAluno
 from sobre import TelaSobre
+import filtroDisciplina as FiltraDisciplina
 
 class TelaHome:
     def __init__(self):
@@ -24,7 +25,7 @@ class TelaHome:
         estilo.configure('Estilo.TEntry', foreground="black", font=('Arial', 10))
         estilo.configure('Estilo.TButton', foreground="black", font=('Arial', 10), background='#0074D9')
 
-        # Botões "Cadastrar Aluno", "Listar Alunos", "Cadastrar Usuário" e "Fazer Logout"
+        # Botões "Cadastrar Aluno", "Listar Alunos", "Cadastrar Usuário", "Filtro de Disciplina", "Sobre" e "Fazer Logout"
         cadastrar_aluno_button = ttk.Button(self.root, text="Cadastrar Aluno", command=self.abrir_tela_cadastro_aluno, style='Estilo.TButton')
         cadastrar_aluno_button.pack(pady=10)
 
@@ -33,6 +34,9 @@ class TelaHome:
 
         cadastrar_usuario_button = ttk.Button(self.root, text="Cadastrar Usuário", command=self.abrir_tela_cadastro_usuario, style='Estilo.TButton')
         cadastrar_usuario_button.pack(pady=10)
+
+        disciplica_listar_alunos_button = ttk.Button(self.root, text="Listar Alunos - Disciplina", command=self.abrir_tela_disciplina_lista_alunos, style='Estilo.TButton')
+        disciplica_listar_alunos_button.pack(pady=10)
 
         sobre_button = ttk.Button(self.root, text="Sobre", command=self.abrir_tela_sobre, style='Estilo.TButton')
         sobre_button.pack(pady=10)
@@ -48,6 +52,10 @@ class TelaHome:
     def abrir_tela_lista_alunos(self):
         self.root.destroy()
         ListaAluno.ListaDeAlunos()
+    
+    def abrir_tela_disciplina_lista_alunos(self):
+        FiltraDisciplina.FiltraDisciplina()
+        self.root.destroy()
 
     def abrir_tela_cadastro_usuario(self):
         TelaCadastroUsuario()

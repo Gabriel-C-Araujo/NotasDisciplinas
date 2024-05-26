@@ -3,16 +3,10 @@ import psycopg2
 class BancoDados:
     def __init__(self):#, banco, usuario, senha):
         self.conexao = psycopg2.connect(database="SistemaNotas", user="postgres", password="123456", host="localhost", port=5432)
-        #self.banco = banco
-        #self.usuario = usuario
-        #self.senha = senha
-        #self.conexao = None
         self.cursor = None
 
     def conectar(self):
         try:
-            #self.conexao = psycopg2.connect(
-            #    dbname=self.banco, user=self.usuario, password=self.senha)
             self.cursor = self.conexao.cursor()
             return True
         except psycopg2.Error as e:
@@ -60,23 +54,22 @@ class BancoDados:
         except psycopg2.Error as e:
             print(f"Erro ao buscar aluno por matrícula: {e}")
             return None
-        
-    def buscar_alunos_por_disciplina(self, nome_disciplina):
+
+    # Não sei se ta funcionando 100%, n quer buscar por nada    
+    def buscar_aluno_por_disciplina(self, nome_disciplina):
         try:
             self.cursor.execute(
                 "SELECT id FROM materias WHERE nome_da_materia = %s", (nome_disciplina,))
-            disciplinas = self.cursor.fetchall()
-            if nome_disciplina != '' or nome_disciplina is not None:
-                for disciplina in disciplinas:
-                    return disciplina[0]
+            disciplina = self.cursor.fetchone()
+            if disciplina:
+                return disciplina[0]
             else:
-                print(f"Disciplina '{nome_disciplina}' não encontrado.")
+                print(f"Disciplina '{nome_disciplina}' não encontrada.")
                 return None
         except psycopg2.Error as e:
             print(f"Erro ao buscar disciplina: {e}")
             return None
     
-    #@staticmethod
     def atualizar_materia(self, aluno_id, sm1, sm2, av, avs, nf, aprovacao):
         try:
             self.cursor.execute("""

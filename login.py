@@ -51,7 +51,6 @@ class TelaLogin:
         close_button = ttk.Button(self.root, text="Fechar", command=self.fechar_janela, style='Estilo.TButton')
         close_button.pack(pady=5)
 
-        #self.bd = BancoDados("SistemaNotas", "postgres", "123456")
         self.bd = BancoDados()
         self.root.mainloop()
 

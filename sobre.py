@@ -28,7 +28,7 @@ class TelaSobre:
         frame = ttk.Frame(self.root)
         frame.pack(fill=tk.BOTH, expand=True)
 
-        # Labels e Entry para nome de usuário, senha e confirmação de senha
+        # Label de sobre, estatica com as informações que setar no codigo.
         sobre_label = ttk.Label(frame, text="Está aplicação foi desenvolvida pelo Augusto, Gabriel e Vinicius, com o fundamento de ser apresentada na aula de 'Desenvolvimento de aplicações rápidas em Python'.", font=('Arial', 12), wraplength=800,justify="center")
         sobre_label.grid(row=0, column=0, padx=10, pady=10)
       
