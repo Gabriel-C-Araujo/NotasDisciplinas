@@ -5,7 +5,7 @@ import filtroDisciplina as FiltraDisciplina
 import home as PagHome
 
 class ListaDisciplina:
-    def __init__(self):
+    def __init__(self,disciplina):
         self.root = tk.Tk()
         self.root.title("Lista de Alunos")
         
@@ -77,7 +77,7 @@ class ListaDisciplina:
 
         # Preenche a árvore de dados com os alunos e suas matérias
         self.bd = BancoDados()
-        self.carregar_alunos_materias()
+        self.carregar_alunos_materias(disciplina)
         
         # Centraliza o frame na janela
         frame.grid_columnconfigure(0, weight=1)
@@ -94,15 +94,16 @@ class ListaDisciplina:
             messagebox.showerror("Erro", "Não foi possível conectar ao banco de dados.")
             return
         try:
+            print(disciplina)
             # Consulta para obter os alunos e suas matérias
-            self.bd.cursor.execute('''
+            self.bd.cursor.execute("""
             SELECT alunos.nome, alunos.matricula, materias.nome_da_materia, materias.ano, materias.semestre, materias.aprovacao,
             materias.sm1, materias.sm2, materias.av, materias.avs, materias.nf
             FROM alunos
             JOIN materias ON alunos.id = materias.aluno_id
-            WHERE materias.nome_da_materia = %s)
-            ''',(disciplina))
-            alunos_disciplina = self.bd.cursor.fetchone()
+            WHERE materias.nome_da_materia = %s
+            """,(disciplina,))
+            alunos_disciplina = self.bd.cursor.fetchall()
             # Preenche a árvore de dados com os alunos e suas matérias
             # não ta funcionando
             for aluno_materia in alunos_disciplina:

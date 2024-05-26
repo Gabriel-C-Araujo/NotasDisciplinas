@@ -65,7 +65,7 @@ class FiltraDisciplina:
         if self.bd.conectar():
             disciplina_id = self.bd.buscar_aluno_por_disciplina(disciplina)
             if disciplina_id:
-                listaDisciplina = ListaDisciplina.ListaDisciplina()
+                listaDisciplina = ListaDisciplina.ListaDisciplina(disciplina)
                 self.root.destroy()
             else:
                 messagebox.showerror("Erro", "Disciplina não encontrado.")
